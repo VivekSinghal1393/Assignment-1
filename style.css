@@ -1,0 +1,16 @@
+body{
+    background-color:lightcyan;
+}
+.text{
+    text-align: center;
+    font-size: 40px;
+    color:coral;
+    margin: 20px;
+    font-weight: bold;
+}
+
+.col > button{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+}
