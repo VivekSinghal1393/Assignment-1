@@ -1,31 +1,24 @@
-var req = new XMLHttpRequest();
-req.onreadystatechange = reportStatus;
-req.open("GET","data.json",true);
-req.send();
-let data;
-function reportStatus(){
-    if(req.readyState == 4 ){
-        data = JSON.parse(this.response);
-    }
-}
-
 let editRowElement;
 
 const fill = () =>{
-    for (let i = 0; i < data.length; i++) {
-        const id = data[i].id;
+    fetch('data.json')
+    .then((response)=>response.json())
+    .then(data=>{
+        data.forEach(element => {
+        const id = element.id;
         document.getElementById("tablebody").innerHTML += `<tr id="row${id}">
-        <td><div class="row${id}">${data[i].fname}</div></td>
-        <td><div class="row${id}">${data[i].mname}</div></td>
-        <td><div class="row${id}">${data[i].lname}</div></td>
-        <td><div class="row${id}">${data[i].email}</div></td>
-        <td><div class="row${id}">${data[i].phoneno}</div></td>
-        <td><div class="row${id}">${data[i].role}</div></td>
-        <td><div class="row${id}">${data[i].address}</div></td>
+        <td><div class="row${id}">${element.fname}</div></td>
+        <td><div class="row${id}">${element.mname}</div></td>
+        <td><div class="row${id}">${element.lname}</div></td>
+        <td><div class="row${id}">${element.email}</div></td>
+        <td><div class="row${id}">${element.phoneno}</div></td>
+        <td><div class="row${id}">${element.role}</div></td>
+        <td><div class="row${id}">${element.address}</div></td>
         <td><button id="editRow${id}" type="button" onclick="editRow(${id})" class="btn btn-success">Edit</button></td>
         <td><button id="deleteRow${id}" type="button" onclick="deleteData(${id})" class="btn btn-danger delete${id}">Delete</button></td>
         </tr>`;        
-    }
+    });
+});
 };
 
 const editRow = (rowId) =>{
@@ -78,14 +71,14 @@ const deleteData = (id) =>{
     rowId.remove();
 };
 
-const loaddata = () =>{
+const loadData = () =>{
     fill();
-    document.getElementById("loaddata").innerHTML = "Refresh Data";
-    document.getElementById("loaddata").id = "refreshdata";
-    document.getElementById("refreshdata").setAttribute("onclick","refreshdata()");
+    document.getElementById("loadData").innerHTML = "Refresh Data";
+    document.getElementById("loadData").id = "refreshData";
+    document.getElementById("refreshData").setAttribute("onclick","refreshData()");
 };
 
-const refreshdata = () =>{
+const refreshData = () =>{
     document.getElementById("tablebody").innerHTML="";
     fill();
 }
